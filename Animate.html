@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacked Cards</title>
+    <style>
+        .stack-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 50px auto;
+            perspective: 600px;
+        }
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            border: 5px solid #fff;
+            overflow: hidden;
+            transition: transform 0.5s ease, z-index 0.5s;
+            cursor: pointer;
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="stack-container" id="stack">
+        <div class="card"><img src="https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format" alt="Card 1"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format" alt="Card 2"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format" alt="Card 3"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format" alt="Card 4"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const stack = document.getElementById("stack");
+            const cards = Array.from(stack.children);
+            
+            cards.forEach((card, index) => {
+                card.style.transform = `scale(${1 - index * 0.05}) translateY(${index * 5}px)`;
+                card.style.zIndex = `${cards.length - index}`;
+                
+                card.addEventListener("click", () => {
+                    stack.appendChild(card);
+                    cards.push(cards.shift());
+                    updateCards();
+                });
+            });
+
+            function updateCards() {
+                cards.forEach((card, index) => {
+                    card.style.transform = `scale(${1 - index * 0.05}) translateY(${index * 5}px)`;
+                    card.style.zIndex = `${cards.length - index}`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+    
